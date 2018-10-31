@@ -88,8 +88,8 @@ def scraper_2(id_):
     data["id"] = id_
     data["venue"] = re.sub("\s", "", values[2].text)
     data["weather"] = re.sub("\s", "", values[4].text)
-    data["temperature"] = re.sub("\D", "", values[5].text)
-    data["humidity"] = re.sub("\D", "", values[6].text)
+    data["temperature"] = re.sub("[^0-9.]", "", values[5].text)
+    data["humidity"] = re.sub("[^0-9.]", "", values[6].text)
 
 
     selector = "#contents > form > div > div > div > div > div > table > tr"
@@ -185,5 +185,3 @@ if __name__ == "__main__":
     ex_stadium.columns = ["stadium", "capacity"]
     ex_stadium["capacity"] = ex_stadium["capacity"].fillna("").apply(lambda x: re.sub("\D", "", x))
     ex_stadium.to_csv(save_dir + "ex_stadium_capacity_mapping.csv", index=None)
-
-
